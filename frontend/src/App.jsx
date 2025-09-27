@@ -12,21 +12,22 @@ function App() {
     return;
   }
   try {
-    const res = await fetch("http://localhost:5000/api/download", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ url }),
+    const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+    const res = await fetch(`${apiUrl}/api/download`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ url }),
     });
     const data = await res.json();
     if (data.videoUrl) {
-    setVideoUrl(data.videoUrl);
+      setVideoUrl(data.videoUrl);
     } else {
       console.error("No video URL in response:", data);
     }
   } catch (err) {
     console.error("Error fetching video:", err);
   }
-};
+ };
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
